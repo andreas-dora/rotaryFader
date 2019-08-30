@@ -1,11 +1,13 @@
 class Rotary{
   String name;
-  int x;
-  int y;
+  float x;
+  float y;
   int r;
-  int value;
+  float value;
   float angle;
   float angleKorr; //--korrektur
+  float angleK;
+  float angleT;
   float angleTemp;
   float angleOld;
   float a;
@@ -30,7 +32,15 @@ class Rotary{
   }
   
   void korrektur(float mx, float my){
-    angleKorr = atan2(my-y, mx-x);
+ //   angleKorr = atan2(my-y, mx-x)+PI;
+ //    angleKorr = atan2(my-y, mx-x);
+  //   angleK = atan2(my-y, mx-x);
+ //   angleKorr = map(angleK, PI, -PI, TWO_PI, 0);
+       angleKorr = map((atan2(my-y, mx-x)), PI, -PI, TWO_PI, 0);
+
+    //if(angleKorr < 0){
+    //  angleKorr = (angleKorr+TWO_PI)%TWO_PI;
+    //}
     angleOld = angle;
   }
   
@@ -41,13 +51,9 @@ class Rotary{
   
   void update(float mx, float my){
     if(isActive){
-      angleTemp = atan2(my-y, mx-x);
-      angle = angleTemp -angleKorr+angleOld;
-      if(angle> TWO_PI){
-        angle = 0;
-      } else if (angle < 0){
-        angle = TWO_PI;
-      }
+      angleTemp = map((atan2(my-y, mx-x)), PI, -PI, TWO_PI, 0);
+      angle = (angleTemp+TWO_PI +angleOld-angleKorr)%TWO_PI;
+  
     }
   }
   
@@ -65,10 +71,12 @@ class Rotary{
     translate(x,y);
     rotate(angle);
     line(0,0- r+9,0,0);
+    stroke(0, 255, 100);
+    line(0,0,r,0);
     popMatrix();
     strokeWeight(1);
-    value = int(map(angle, 0, TWO_PI, 0, 360));
-    
+
+    value = map(angle, 0, TWO_PI, 0, 360); 
     textAlign(CENTER, TOP);
     fill(hi_lite);
     text("Angel-Korrektur: " + angleKorr, width/4, 270);
