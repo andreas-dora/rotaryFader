@@ -32,15 +32,7 @@ class Rotary{
   }
   
   void korrektur(float mx, float my){
- //   angleKorr = atan2(my-y, mx-x)+PI;
- //    angleKorr = atan2(my-y, mx-x);
-  //   angleK = atan2(my-y, mx-x);
- //   angleKorr = map(angleK, PI, -PI, TWO_PI, 0);
-       angleKorr = map((atan2(my-y, mx-x)), PI, -PI, TWO_PI, 0);
-
-    //if(angleKorr < 0){
-    //  angleKorr = (angleKorr+TWO_PI)%TWO_PI;
-    //}
+    angleKorr = map((atan2(my-y, mx-x)), PI, -PI, TWO_PI, 0);
     angleOld = angle;
   }
   
@@ -52,8 +44,7 @@ class Rotary{
   void update(float mx, float my){
     if(isActive){
       angleTemp = map((atan2(my-y, mx-x)), PI, -PI, TWO_PI, 0);
-      angle = (angleTemp+TWO_PI +angleOld-angleKorr)%TWO_PI;
-  
+      angle = (angleTemp+TWO_PI +angleOld-angleKorr)%TWO_PI; 
     }
   }
   
@@ -75,7 +66,6 @@ class Rotary{
     line(0,0,r,0);
     popMatrix();
     strokeWeight(1);
-
     value = map(angle, 0, TWO_PI, 0, 360); 
     textAlign(CENTER, TOP);
     fill(hi_lite);
