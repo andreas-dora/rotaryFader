@@ -6,12 +6,8 @@ class Rotary{
   float value;
   float angle;
   float angleKorr; //--korrektur
-  float angleK;
-  float angleT;
   float angleTemp;
   float angleOld;
-  float a;
-  color tileColor;  
   boolean isActive = false;
   color c;
   
@@ -67,11 +63,11 @@ class Rotary{
     popMatrix();
     strokeWeight(1);
     value = map(angle, 0, TWO_PI, 0, 360); 
+   
     textAlign(CENTER, TOP);
     fill(hi_lite);
     text("Angel-Korrektur: " + angleKorr, width/4, 270);
     text("Temp. Angel: " + angleTemp, width/4, 295);
     text("Angel: " + angle, width/4, 320);
-
   }
 }
